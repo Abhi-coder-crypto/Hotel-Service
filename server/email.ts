@@ -4,13 +4,32 @@ if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
   console.warn("Warning: Gmail credentials not set. Email functionality will be disabled.");
 }
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-});
+// Create transporter with better error handling
+let transporter: any = null;
+
+if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+  try {
+    transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD,
+      },
+      debug: true, // Enable debug logs
+    });
+    
+    // Test the connection
+    transporter.verify((error: any, success: any) => {
+      if (error) {
+        console.error('Gmail SMTP verification failed:', error.message);
+      } else {
+        console.log('Gmail SMTP server is ready to take our messages');
+      }
+    });
+  } catch (error) {
+    console.error('Failed to create Gmail transporter:', error);
+  }
+}
 
 interface ServiceRequestEmailParams {
   guestName: string;
@@ -23,8 +42,24 @@ interface ServiceRequestEmailParams {
 export async function sendServiceRequestEmail(
   params: ServiceRequestEmailParams
 ): Promise<boolean> {
+  // Log the service request details for debugging
+  console.log('Service Request Details:', {
+    name: params.guestName,
+    roomNumber: params.roomNumber,
+    service: params.service,
+    notes: params.notes,
+    timestamp: params.timestamp
+  });
+  
   if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
-    console.log('Email sending skipped: Gmail credentials not configured');
+    console.log('✗ Email sending skipped: Gmail credentials not configured');
+    console.log('📧 Service request logged above - you can manually check the logs for new requests');
+    return false;
+  }
+  
+  if (!transporter) {
+    console.log('✗ Email sending failed: Gmail transporter not initialized');
+    console.log('📧 Service request logged above - you can manually check the logs for new requests');
     return false;
   }
   
