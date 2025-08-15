@@ -43,7 +43,7 @@ export default function Header() {
                 href={item.href}
                 className={`transition-colors duration-200 font-bold ${
                   location === item.href
-                    ? "text-blue-300"
+                    ? "text-white"
                     : "text-white hover:text-blue-300"
                 }`}
                 onClick={() => {
