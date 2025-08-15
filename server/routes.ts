@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertServiceRequestSchema } from "@shared/schema";
 import { z } from "zod";
+import { sendServiceRequestEmail } from "./email";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Service request endpoint
@@ -21,9 +22,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
         timestamp: serviceRequest.createdAt
       });
       
+      // Send email notification
+      const emailSent = await sendServiceRequestEmail({
+        guestName: serviceRequest.name,
+        roomNumber: serviceRequest.roomNumber,
+        service: serviceRequest.service,
+        notes: serviceRequest.notes || undefined,
+        timestamp: serviceRequest.createdAt ? new Date(serviceRequest.createdAt).toLocaleString() : new Date().toLocaleString()
+      });
+      
+      if (!emailSent) {
+        console.warn("Failed to send email notification for service request");
+      }
+      
       res.status(201).json({ 
         message: "Service request submitted successfully",
-        request: serviceRequest 
+        request: serviceRequest,
+        emailSent 
       });
     } catch (error) {
       if (error instanceof z.ZodError) {

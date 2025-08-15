@@ -31,6 +31,12 @@ export default function Header() {
                     ? "text-primary font-medium"
                     : "text-gray-600 hover:text-primary"
                 }`}
+                onClick={() => {
+                  // Scroll to top when navigating
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
+                }}
               >
                 {item.name}
               </Link>
@@ -56,6 +62,12 @@ export default function Header() {
                         ? "text-primary font-medium"
                         : "text-gray-600 hover:text-primary"
                     }`}
+                    onClick={() => {
+                      // Scroll to top when navigating
+                      setTimeout(() => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }, 100);
+                    }}
                   >
                     {item.name}
                   </Link>

@@ -25,7 +25,14 @@ export default function Home() {
               Experience luxury and comfort with our premium hotel services. Your satisfaction is our priority.
             </p>
             <div className="animate-zoomIn !opacity-100" style={{animationDelay: '0.6s'}}>
-              <Link href="/services">
+              <Link 
+                href="/services"
+                onClick={() => {
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
+                }}
+              >
                 <Button className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white font-bold py-4 px-10 text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl border-2 border-white/30" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>
                   <span className="mr-2">🛎️</span>
                   Explore Our Services
