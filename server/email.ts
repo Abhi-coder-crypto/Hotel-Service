@@ -1,13 +1,16 @@
-import { MailService } from '@sendgrid/mail';
+import nodemailer from 'nodemailer';
 
-if (!process.env.SENDGRID_API_KEY) {
-  console.warn("Warning: SENDGRID_API_KEY environment variable not set. Email functionality will be disabled.");
+if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+  console.warn("Warning: Gmail credentials not set. Email functionality will be disabled.");
 }
 
-const mailService = new MailService();
-if (process.env.SENDGRID_API_KEY) {
-  mailService.setApiKey(process.env.SENDGRID_API_KEY);
-}
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+});
 
 interface ServiceRequestEmailParams {
   guestName: string;
@@ -20,8 +23,8 @@ interface ServiceRequestEmailParams {
 export async function sendServiceRequestEmail(
   params: ServiceRequestEmailParams
 ): Promise<boolean> {
-  if (!process.env.SENDGRID_API_KEY) {
-    console.log('Email sending skipped: SENDGRID_API_KEY not configured');
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+    console.log('Email sending skipped: Gmail credentials not configured');
     return false;
   }
   
@@ -74,9 +77,9 @@ export async function sendServiceRequestEmail(
       </div>
     `;
 
-    await mailService.send({
-      to: 'abhijeet.student.2000@gmail.com', // Your actual email where you want to receive notifications
-      from: 'noreply@sandboxed.com', // SendGrid sandbox verified sender
+    await transporter.sendMail({
+      to: process.env.GMAIL_USER, // Sends to your own Gmail address
+      from: process.env.GMAIL_USER, // Must be the same as authenticated user for Gmail
       subject: `🛎️ Service Request: ${params.service} - Room ${params.roomNumber}`,
       html: emailContent,
       text: `New Service Request\n\nGuest: ${params.guestName}\nRoom: ${params.roomNumber}\nService: ${params.service}\nTime: ${params.timestamp}\n\nNotes: ${params.notes || 'None'}`,
@@ -84,7 +87,7 @@ export async function sendServiceRequestEmail(
 
     return true;
   } catch (error) {
-    console.error('SendGrid email error:', error);
+    console.error('Gmail email error:', error);
     return false;
   }
 }
