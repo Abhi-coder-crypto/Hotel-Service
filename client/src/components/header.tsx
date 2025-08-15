@@ -12,12 +12,27 @@ export default function Header() {
   ];
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          <Link href="/" className="flex items-center">
-            <Hotel className="text-2xl mr-3 text-red-500" style={{ filter: 'drop-shadow(0 0 8px #ff6b6b)' }} />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">Grand Hotel</h1>
+    <header className="bg-gradient-to-r from-gray-50 to-blue-50 shadow-lg border-b-2 border-blue-100 relative overflow-hidden">
+      {/* Decorative background pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-0 left-0 w-full h-full" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234f46e5' fill-opacity='0.3'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundSize: '30px 30px'
+        }}></div>
+      </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="flex justify-between items-center py-6">
+          <Link href="/" className="flex items-center group transition-all duration-300 hover:scale-105">
+            <div className="relative">
+              <Hotel className="text-3xl mr-3 text-blue-600 group-hover:text-blue-700 transition-colors duration-300" style={{ filter: 'drop-shadow(0 0 12px rgba(59, 130, 246, 0.5))' }} />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent group-hover:from-blue-700 group-hover:via-purple-700 group-hover:to-indigo-700 transition-all duration-300">
+                Grand Hotel
+              </h1>
+              <p className="text-xs text-gray-500 mt-1 font-medium tracking-wide">LUXURY & COMFORT</p>
+            </div>
           </Link>
           
           {/* Desktop Navigation */}
