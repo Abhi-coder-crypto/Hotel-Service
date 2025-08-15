@@ -66,32 +66,24 @@ export default function Header() {
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent className="bg-white border-l-4 border-blue-600 shadow-2xl">
-              <div className="flex flex-col space-y-3 mt-4">
-                <div className="text-center pb-2 border-b border-gray-200">
-                  <h2 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Menu</h2>
-                </div>
+            <SheetContent className="bg-white shadow-lg w-48 p-3">
+              <div className="flex flex-col space-y-2">
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`text-lg py-2 px-3 rounded-lg transition-all duration-300 border-l-4 ${
+                    className={`text-sm py-2 px-3 rounded transition-colors ${
                       location === item.href
-                        ? "text-white bg-gradient-to-r from-blue-600 to-purple-600 font-bold border-yellow-400 shadow-lg"
-                        : "text-gray-800 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 font-semibold border-transparent hover:border-blue-300 hover:shadow-md"
+                        ? "text-blue-600 bg-blue-50 font-semibold"
+                        : "text-gray-700 hover:text-blue-600 hover:bg-gray-50 font-medium"
                     }`}
                     onClick={() => {
-                      // Scroll to top when navigating
                       setTimeout(() => {
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }, 100);
                     }}
                   >
-                    <div className="flex items-center">
-                      {item.name === "Home" && <span className="mr-3 text-xl">🏠</span>}
-                      {item.name === "Services" && <span className="mr-3 text-xl">🛎️</span>}
-                      {item.name}
-                    </div>
+                    {item.name}
                   </Link>
                 ))}
               </div>
