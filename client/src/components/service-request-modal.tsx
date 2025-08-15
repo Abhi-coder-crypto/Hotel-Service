@@ -189,7 +189,7 @@ export default function ServiceRequestModal({
             </Button>
             <Button
               type="submit"
-              className="flex-1 h-11 bg-primary hover:bg-blue-700 font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-200"
+              className="flex-1 h-11 bg-blue-600 hover:bg-blue-700 font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-200"
               disabled={submitServiceRequest.isPending}
               data-testid="button-submit"
             >
