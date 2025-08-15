@@ -98,7 +98,7 @@ export default function ServiceRequestModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-lg w-full bg-white shadow-2xl border-2 border-gray-200 rounded-xl">
+      <DialogContent className="max-w-lg w-full bg-white shadow-2xl border-2 border-gray-200 rounded-xl max-h-[90vh] overflow-y-auto">
         <DialogHeader className="pb-4 border-b border-gray-200">
           <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center justify-between">
             <span className="text-primary">🛎️ Request Service</span>
