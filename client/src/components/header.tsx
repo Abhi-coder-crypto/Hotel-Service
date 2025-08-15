@@ -12,7 +12,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="bg-gradient-to-r from-gray-50 to-blue-50 shadow-lg border-b-2 border-blue-100 relative overflow-hidden">
+    <header className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 shadow-lg border-b-2 border-blue-100 relative overflow-hidden">
       {/* Decorative background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-full h-full" style={{
@@ -24,14 +24,14 @@ export default function Header() {
         <div className="flex justify-between items-center py-6">
           <Link href="/" className="flex items-center group transition-all duration-300 hover:scale-105">
             <div className="relative">
-              <Hotel className="text-3xl mr-3 text-blue-600 group-hover:text-blue-700 transition-colors duration-300" style={{ filter: 'drop-shadow(0 0 12px rgba(59, 130, 246, 0.5))' }} />
+              <Hotel className="text-3xl mr-3 text-white group-hover:text-yellow-300 transition-colors duration-300" style={{ filter: 'drop-shadow(0 0 12px rgba(255, 255, 255, 0.5))' }} />
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
             </div>
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent group-hover:from-blue-700 group-hover:via-purple-700 group-hover:to-indigo-700 transition-all duration-300">
+              <h1 className="text-3xl font-bold text-white group-hover:text-yellow-300 transition-all duration-300">
                 Grand Hotel
               </h1>
-              <p className="text-xs text-gray-500 mt-1 font-medium tracking-wide">LUXURY & COMFORT</p>
+              <p className="text-xs text-gray-200 mt-1 font-medium tracking-wide">LUXURY & COMFORT</p>
             </div>
           </Link>
           
@@ -43,8 +43,8 @@ export default function Header() {
                 href={item.href}
                 className={`transition-colors duration-200 ${
                   location === item.href
-                    ? "text-primary font-medium"
-                    : "text-gray-600 hover:text-primary"
+                    ? "text-yellow-300 font-medium"
+                    : "text-white hover:text-yellow-300"
                 }`}
                 onClick={() => {
                   // Scroll to top when navigating
@@ -61,8 +61,8 @@ export default function Header() {
           {/* Mobile Navigation */}
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden border-2 border-primary bg-white hover:bg-gray-100">
-                <Menu className="h-6 w-6 text-primary" />
+              <Button variant="ghost" size="icon" className="md:hidden border-2 border-white bg-white/10 hover:bg-white/20">
+                <Menu className="h-6 w-6 text-white" />
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
