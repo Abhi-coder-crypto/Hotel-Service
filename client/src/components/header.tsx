@@ -41,9 +41,9 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`transition-colors duration-200 ${
+                className={`transition-colors duration-200 font-bold ${
                   location === item.href
-                    ? "text-yellow-300 font-medium"
+                    ? "text-yellow-300"
                     : "text-yellow-400 hover:text-yellow-300"
                 }`}
                 onClick={() => {
