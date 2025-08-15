@@ -7,7 +7,7 @@ export default function Home() {
     <div>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary to-blue-700 text-white">
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
         <div 
           className="absolute inset-0" 
           style={{
@@ -26,7 +26,7 @@ export default function Home() {
             </p>
             <div className="animate-zoomIn !opacity-100" style={{animationDelay: '0.6s'}}>
               <Link href="/services">
-                <Button className="bg-accent hover:bg-yellow-500 text-white font-semibold py-4 px-8 text-lg transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl animate-float">
+                <Button className="bg-accent hover:bg-yellow-500 text-black font-bold py-6 px-12 text-xl transition-all duration-300 transform hover:scale-110 shadow-2xl hover:shadow-3xl animate-float border-4 border-white">
                   <span className="mr-2">🛎️</span>
                   Explore Our Services
                 </Button>

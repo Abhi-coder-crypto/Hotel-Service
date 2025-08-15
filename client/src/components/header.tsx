@@ -16,8 +16,8 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <Link href="/" className="flex items-center">
-            <Hotel className="text-primary text-2xl mr-3" />
-            <h1 className="text-2xl font-bold text-primary">Grand Hotel</h1>
+            <Hotel className="text-2xl mr-3 text-red-500" style={{ filter: 'drop-shadow(0 0 8px #ff6b6b)' }} />
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">Grand Hotel</h1>
           </Link>
           
           {/* Desktop Navigation */}
