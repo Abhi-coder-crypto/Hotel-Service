@@ -29,14 +29,14 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#contact" className="hover:text-yellow-400 transition-colors">
+                <Link href="/contact" className="hover:text-yellow-400 transition-colors">
                   Contact
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#about" className="hover:text-yellow-400 transition-colors">
+                <Link href="/about" className="hover:text-yellow-400 transition-colors">
                   About Us
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
