@@ -68,10 +68,11 @@ export async function sendServiceRequestEmail(
     `;
 
     await mailService.send({
-      to: 'hotel-staff@grandhotel.com', // Replace with actual hotel email
-      from: 'noreply@grandhotel.com', // Replace with verified sender email
+      to: 'abhijeet.student.2000@gmail.com', // Your actual email where you want to receive notifications
+      from: 'noreply@sandboxed.com', // SendGrid sandbox verified sender
       subject: `🛎️ Service Request: ${params.service} - Room ${params.roomNumber}`,
       html: emailContent,
+      text: `New Service Request\n\nGuest: ${params.guestName}\nRoom: ${params.roomNumber}\nService: ${params.service}\nTime: ${params.timestamp}\n\nNotes: ${params.notes || 'None'}`,
     });
 
     return true;
