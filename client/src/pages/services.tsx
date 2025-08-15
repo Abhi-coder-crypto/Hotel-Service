@@ -120,10 +120,10 @@ function ServiceCard({ service, index, onServiceRequest }: { service: typeof ser
         <p className="text-gray-600 mb-4">{service.description}</p>
         <Button 
           onClick={() => onServiceRequest(service.name)}
-          className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-2xl border-2 border-red-500 text-lg"
+          className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-5 rounded-lg transition-all duration-300 transform hover:scale-102 shadow-md hover:shadow-lg"
           data-testid={`button-request-${service.id}`}
         >
-          🛎️ REQUEST SERVICE
+          🛎️ Request Service
         </Button>
       </div>
     </div>
