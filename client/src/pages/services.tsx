@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ServiceRequestModal from "../components/service-request-modal";
+import { useScrollAnimation } from "../hooks/use-scroll-animation";
 import { 
   Utensils, 
   Fan, 
@@ -87,9 +88,51 @@ const services = [
   }
 ];
 
+function ServiceCard({ service, index, onServiceRequest }: { service: typeof services[0], index: number, onServiceRequest: (name: string) => void }) {
+  const { ref, isVisible } = useScrollAnimation(0.1, '50px');
+  const IconComponent = service.icon;
+  
+  const animationClasses = [
+    'scroll-reveal-left',
+    'scroll-reveal',
+    'scroll-reveal-right',
+    'scroll-reveal-scale'
+  ];
+  
+  const animationClass = animationClasses[index % animationClasses.length];
+  
+  return (
+    <div 
+      ref={ref}
+      className={`bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden ${animationClass} ${isVisible ? 'revealed' : ''}`}
+      style={{ transitionDelay: `${(index % 4) * 150}ms` }}
+    >
+      <img 
+        src={service.image} 
+        alt={service.name} 
+        className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+      />
+      <div className="p-6">
+        <div className="flex items-center mb-3">
+          <IconComponent className="text-primary text-xl mr-3 animate-float" style={{animationDelay: `${index * 0.5}s`}} />
+          <h3 className="text-xl font-semibold">{service.name}</h3>
+        </div>
+        <p className="text-gray-600 mb-4">{service.description}</p>
+        <Button 
+          onClick={() => onServiceRequest(service.name)}
+          className="w-full bg-primary hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105"
+        >
+          Request Service
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 export default function Services() {
   const [selectedService, setSelectedService] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.2);
 
   const handleServiceRequest = (serviceName: string) => {
     setSelectedService(serviceName);
@@ -100,7 +143,7 @@ export default function Services() {
     <div>
       <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div ref={headerRef} className={`text-center mb-12 scroll-reveal ${headerVisible ? 'revealed' : ''}`}>
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Hotel Services</h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Discover our comprehensive range of premium hotel services designed for your comfort and convenience.
@@ -109,34 +152,14 @@ export default function Services() {
 
           {/* Services Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {services.map((service) => {
-              const IconComponent = service.icon;
-              return (
-                <div 
-                  key={service.id}
-                  className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden"
-                >
-                  <img 
-                    src={service.image} 
-                    alt={service.name} 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <div className="flex items-center mb-3">
-                      <IconComponent className="text-primary text-xl mr-3" />
-                      <h3 className="text-xl font-semibold">{service.name}</h3>
-                    </div>
-                    <p className="text-gray-600 mb-4">{service.description}</p>
-                    <Button 
-                      onClick={() => handleServiceRequest(service.name)}
-                      className="w-full bg-primary hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
-                    >
-                      Request Service
-                    </Button>
-                  </div>
-                </div>
-              );
-            })}
+            {services.map((service, index) => (
+              <ServiceCard 
+                key={service.id}
+                service={service}
+                index={index}
+                onServiceRequest={handleServiceRequest}
+              />
+            ))}
           </div>
         </div>
       </section>
