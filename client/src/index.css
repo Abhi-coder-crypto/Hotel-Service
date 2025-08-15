@@ -148,22 +148,27 @@
 
 /* Animation utility classes */
 .animate-fadeInUp {
+  opacity: 0;
   animation: fadeInUp 0.8s ease-out forwards;
 }
 
 .animate-fadeInDown {
+  opacity: 0;
   animation: fadeInDown 0.8s ease-out forwards;
 }
 
 .animate-slideInLeft {
+  opacity: 0;
   animation: slideInLeft 0.8s ease-out forwards;
 }
 
 .animate-slideInRight {
+  opacity: 0;
   animation: slideInRight 0.8s ease-out forwards;
 }
 
 .animate-zoomIn {
+  opacity: 0;
   animation: zoomIn 0.6s ease-out forwards;
 }
 

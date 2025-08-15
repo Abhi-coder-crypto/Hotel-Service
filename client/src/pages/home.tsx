@@ -18,13 +18,13 @@ export default function Home() {
         ></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fadeInDown">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fadeInDown !opacity-100">
               Welcome to <span className="text-accent animate-pulse-glow">Grand Hotel</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90 animate-fadeInUp" style={{animationDelay: '0.3s'}}>
+            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto animate-fadeInUp !opacity-90" style={{animationDelay: '0.3s'}}>
               Experience luxury and comfort with our premium hotel services. Your satisfaction is our priority.
             </p>
-            <div className="animate-zoomIn" style={{animationDelay: '0.6s'}}>
+            <div className="animate-zoomIn !opacity-100" style={{animationDelay: '0.6s'}}>
               <Link href="/services">
                 <Button className="bg-accent hover:bg-yellow-500 text-white font-semibold py-4 px-8 text-lg transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl animate-float">
                   <span className="mr-2">🛎️</span>
