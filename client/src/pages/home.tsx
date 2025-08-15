@@ -7,26 +7,26 @@ export default function Home() {
     <div>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary to-blue-700 text-white">
-        <div className="absolute inset-0 bg-black bg-opacity-75"></div>
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <div 
           className="absolute inset-0" 
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&h=1080')",
+            backgroundImage: "url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&h=1080')",
             backgroundSize: "cover",
             backgroundPosition: "center"
           }}
         ></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fadeInDown !opacity-100 drop-shadow-2xl" style={{ textShadow: '3px 3px 6px rgba(0,0,0,0.8)' }}>
-              Welcome to <span className="text-accent animate-pulse-glow bg-black bg-opacity-50 px-3 py-1 rounded-lg">Grand Hotel</span>
+            <h1 className="text-4xl md:text-6xl font-semibold mb-6 animate-fadeInDown !opacity-100" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
+              Welcome to <span className="text-accent animate-pulse-glow">Grand Hotel</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto animate-fadeInUp !opacity-100 font-semibold bg-black bg-opacity-40 px-6 py-4 rounded-lg" style={{animationDelay: '0.3s', textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}>
+            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto animate-fadeInUp !opacity-100 font-medium" style={{animationDelay: '0.3s', textShadow: '1px 1px 3px rgba(0,0,0,0.7)'}}>
               Experience luxury and comfort with our premium hotel services. Your satisfaction is our priority.
             </p>
             <div className="animate-zoomIn !opacity-100" style={{animationDelay: '0.6s'}}>
               <Link href="/services">
-                <Button className="bg-accent hover:bg-yellow-400 text-black font-bold py-6 px-12 text-xl transition-all duration-300 transform hover:scale-110 shadow-2xl hover:shadow-3xl animate-float border-4 border-white drop-shadow-2xl" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>
+                <Button className="bg-accent hover:bg-yellow-400 text-black font-semibold py-4 px-8 text-lg transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl animate-float">
                   <span className="mr-2">🛎️</span>
                   Explore Our Services
                 </Button>
