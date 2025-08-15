@@ -66,16 +66,19 @@ export default function Header() {
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent>
-              <div className="flex flex-col space-y-4 mt-4">
+            <SheetContent className="bg-white border-l-4 border-blue-600 shadow-2xl">
+              <div className="flex flex-col space-y-6 mt-8">
+                <div className="text-center pb-4 border-b border-gray-200">
+                  <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Menu</h2>
+                </div>
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`text-lg ${
+                    className={`text-xl p-4 rounded-lg transition-all duration-300 border-l-4 ${
                       location === item.href
-                        ? "text-primary font-medium"
-                        : "text-gray-600 hover:text-primary"
+                        ? "text-white bg-gradient-to-r from-blue-600 to-purple-600 font-bold border-yellow-400 shadow-lg"
+                        : "text-gray-800 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 font-semibold border-transparent hover:border-blue-300 hover:shadow-md"
                     }`}
                     onClick={() => {
                       // Scroll to top when navigating
@@ -84,7 +87,11 @@ export default function Header() {
                       }, 100);
                     }}
                   >
-                    {item.name}
+                    <div className="flex items-center">
+                      {item.name === "Home" && <span className="mr-3 text-xl">🏠</span>}
+                      {item.name === "Services" && <span className="mr-3 text-xl">🛎️</span>}
+                      {item.name}
+                    </div>
                   </Link>
                 ))}
               </div>
