@@ -104,7 +104,7 @@ function ServiceCard({ service, index, onServiceRequest }: { service: typeof ser
   return (
     <div 
       ref={ref}
-      className={`bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden ${animationClass} ${isVisible ? 'revealed' : ''}`}
+      className={`bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden h-full flex flex-col ${animationClass} ${isVisible ? 'revealed' : ''}`}
       style={{ transitionDelay: `${(index % 4) * 150}ms` }}
     >
       <img 
@@ -112,12 +112,12 @@ function ServiceCard({ service, index, onServiceRequest }: { service: typeof ser
         alt={service.name} 
         className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
       />
-      <div className="p-6">
+      <div className="p-6 flex flex-col flex-grow">
         <div className="flex items-center mb-3">
           <IconComponent className="text-primary text-xl mr-3 animate-float" style={{animationDelay: `${index * 0.5}s`}} />
           <h3 className="text-xl font-semibold">{service.name}</h3>
         </div>
-        <p className="text-gray-600 mb-4">{service.description}</p>
+        <p className="text-gray-600 mb-4 flex-grow">{service.description}</p>
         <Button 
           onClick={() => onServiceRequest(service.name)}
           className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-5 rounded-lg transition-all duration-300 transform hover:scale-102 shadow-md hover:shadow-lg"
