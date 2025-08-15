@@ -33,7 +33,7 @@ export default function Home() {
                   }, 100);
                 }}
               >
-                <Button className="bg-gradient-to-r from-blue-600 to-purple-700 hover:from-blue-700 hover:to-purple-800 text-white font-bold py-4 px-10 text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl border-2 border-white/30" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>
+                <Button className="bg-gradient-to-r from-slate-800 via-slate-700 to-gray-800 hover:from-slate-900 hover:via-slate-800 hover:to-gray-900 text-white font-bold py-4 px-10 text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl border-2 border-white/30" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>
                   <span className="mr-2">🛎️</span>
                   Explore Our Services
                 </Button>
