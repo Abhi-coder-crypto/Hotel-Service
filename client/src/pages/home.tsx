@@ -7,7 +7,7 @@ export default function Home() {
     <div>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary to-blue-700 text-white">
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70"></div>
         <div 
           className="absolute inset-0" 
           style={{
@@ -18,15 +18,15 @@ export default function Home() {
         ></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-semibold mb-6 animate-fadeInDown !opacity-100" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
-              Welcome to <span className="text-accent animate-pulse-glow">Grand Hotel</span>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fadeInDown !opacity-100 text-white" style={{ textShadow: '3px 3px 8px rgba(0,0,0,0.9), 1px 1px 3px rgba(0,0,0,1)' }}>
+              Welcome to <span className="text-yellow-400 animate-pulse-glow">Grand Hotel</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto animate-fadeInUp !opacity-100 font-medium" style={{animationDelay: '0.3s', textShadow: '1px 1px 3px rgba(0,0,0,0.7)'}}>
+            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto animate-fadeInUp !opacity-100 font-semibold text-white" style={{animationDelay: '0.3s', textShadow: '2px 2px 6px rgba(0,0,0,0.9), 1px 1px 3px rgba(0,0,0,1)'}}>
               Experience luxury and comfort with our premium hotel services. Your satisfaction is our priority.
             </p>
             <div className="animate-zoomIn !opacity-100" style={{animationDelay: '0.6s'}}>
               <Link href="/services">
-                <Button className="bg-accent hover:bg-yellow-400 text-black font-semibold py-4 px-8 text-lg transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl animate-float">
+                <Button className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white font-bold py-4 px-10 text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl border-2 border-white/30" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>
                   <span className="mr-2">🛎️</span>
                   Explore Our Services
                 </Button>

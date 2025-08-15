@@ -14,6 +14,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
@@ -97,22 +98,26 @@ export default function ServiceRequestModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md w-full">
-        <DialogHeader>
+      <DialogContent className="max-w-lg w-full bg-white shadow-2xl border-2 border-gray-200 rounded-xl">
+        <DialogHeader className="pb-4 border-b border-gray-200">
           <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center justify-between">
-            Request Service
+            <span className="text-primary">🛎️ Request Service</span>
           </DialogTitle>
+          <DialogDescription className="text-gray-600 mt-2">
+            Fill out the form below to request hotel service. Our staff will assist you promptly.
+          </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 pt-4">
           {/* Name Field */}
-          <div>
-            <Label htmlFor="name">Full Name</Label>
+          <div className="space-y-2">
+            <Label htmlFor="name" className="text-sm font-semibold text-gray-700">Full Name *</Label>
             <Input
               id="name"
               placeholder="Enter your full name"
               {...form.register("name")}
-              className="mt-1"
+              className="h-11 border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-lg"
+              data-testid="input-name"
             />
             {form.formState.errors.name && (
               <p className="text-red-500 text-sm mt-1">
@@ -122,14 +127,15 @@ export default function ServiceRequestModal({
           </div>
 
           {/* Room Number Field */}
-          <div>
-            <Label htmlFor="roomNumber">Room Number</Label>
+          <div className="space-y-2">
+            <Label htmlFor="roomNumber" className="text-sm font-semibold text-gray-700">Room Number *</Label>
             <Input
               id="roomNumber"
               placeholder="Enter room number"
               {...form.register("roomNumber")}
               readOnly={isRoomAutoFilled}
-              className={`mt-1 ${isRoomAutoFilled ? "bg-gray-100" : ""}`}
+              className={`h-11 border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-lg ${isRoomAutoFilled ? "bg-gray-100" : ""}`}
+              data-testid="input-room-number"
             />
             {isRoomAutoFilled && (
               <p className="text-xs text-gray-500 mt-1 flex items-center">
@@ -145,43 +151,47 @@ export default function ServiceRequestModal({
           </div>
 
           {/* Selected Service Field */}
-          <div>
-            <Label htmlFor="service">Selected Service</Label>
+          <div className="space-y-2">
+            <Label htmlFor="service" className="text-sm font-semibold text-gray-700">Selected Service</Label>
             <Input
               id="service"
               {...form.register("service")}
               readOnly
-              className="mt-1 bg-gray-50"
+              className="h-11 bg-primary/10 border-2 border-primary/30 text-primary font-medium rounded-lg"
+              data-testid="input-service"
             />
           </div>
 
           {/* Additional Notes */}
-          <div>
-            <Label htmlFor="notes">Additional Notes (Optional)</Label>
+          <div className="space-y-2">
+            <Label htmlFor="notes" className="text-sm font-semibold text-gray-700">Additional Notes (Optional)</Label>
             <Textarea
               id="notes"
-              rows={3}
+              rows={4}
               placeholder="Any special requests or additional information..."
               {...form.register("notes")}
-              className="mt-1 resize-none"
+              className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-lg resize-none"
+              data-testid="textarea-notes"
             />
           </div>
 
           {/* Form Actions */}
-          <div className="flex space-x-3 pt-4">
+          <div className="flex space-x-3 pt-6 border-t border-gray-200">
             <Button
               type="button"
               variant="outline"
               onClick={onClose}
-              className="flex-1"
+              className="flex-1 h-11 border-2 border-gray-300 hover:bg-gray-50 font-semibold"
               disabled={submitServiceRequest.isPending}
+              data-testid="button-cancel"
             >
               Cancel
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-primary hover:bg-blue-700"
+              className="flex-1 h-11 bg-primary hover:bg-blue-700 font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-200"
               disabled={submitServiceRequest.isPending}
+              data-testid="button-submit"
             >
               {submitServiceRequest.isPending ? (
                 "Submitting..."
