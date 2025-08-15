@@ -46,8 +46,8 @@ export default function Header() {
           {/* Mobile Navigation */}
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
-                <Menu className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="md:hidden border-2 border-primary bg-white hover:bg-gray-100">
+                <Menu className="h-6 w-6 text-primary" />
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
