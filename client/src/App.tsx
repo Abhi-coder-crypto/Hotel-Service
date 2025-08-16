@@ -6,8 +6,6 @@ import Home from "./pages/home";
 import Services from "./pages/services";
 import Contact from "./pages/contact";
 import About from "./pages/about";
-import Header from "@/components/header";
-import Footer from "./components/footer";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -26,12 +24,8 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="min-h-screen bg-gray-50 flex flex-col">
-          <Header />
-          <main className="flex-1">
-            <Router />
-          </main>
-          <Footer />
+        <div className="min-h-screen bg-gray-50">
+          <Router />
         </div>
       </TooltipProvider>
     </QueryClientProvider>

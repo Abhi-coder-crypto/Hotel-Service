@@ -18,6 +18,14 @@ export default function Home() {
         ></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
           <div className="text-center">
+            <div className="mb-8 animate-fadeInDown !opacity-100">
+              <img 
+                src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200" 
+                alt="Grand Hotel Logo" 
+                className="w-32 h-32 object-cover rounded-full mx-auto border-4 border-yellow-400 shadow-2xl"
+                style={{ filter: 'brightness(1.1) contrast(1.2)' }}
+              />
+            </div>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fadeInDown !opacity-100 text-white" style={{ textShadow: '3px 3px 8px rgba(0,0,0,0.9), 1px 1px 3px rgba(0,0,0,1)' }}>
               Welcome to <span className="text-yellow-400 animate-pulse-glow">Grand Hotel</span>
             </h1>
