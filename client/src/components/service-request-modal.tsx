@@ -98,12 +98,12 @@ export default function ServiceRequestModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-lg w-full bg-white shadow-2xl border-2 border-gray-200 rounded-xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-lg w-full mx-4 sm:mx-auto bg-white shadow-2xl border-2 border-gray-200 rounded-xl max-h-[90vh] overflow-y-auto">
         <DialogHeader className="pb-4 border-b border-gray-200">
-          <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center justify-between">
+          <DialogTitle className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center justify-between">
             <span className="text-primary">🛎️ Request Service</span>
           </DialogTitle>
-          <DialogDescription className="text-gray-600 mt-2">
+          <DialogDescription className="text-gray-600 mt-2 text-sm sm:text-base">
             Fill out the form below to request hotel service. Our staff will assist you promptly.
           </DialogDescription>
         </DialogHeader>
@@ -116,7 +116,7 @@ export default function ServiceRequestModal({
               id="name"
               placeholder="Enter your full name"
               {...form.register("name")}
-              className="h-11 border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-lg"
+              className="h-12 sm:h-11 border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-lg text-base"
               data-testid="input-name"
             />
             {form.formState.errors.name && (
@@ -134,7 +134,7 @@ export default function ServiceRequestModal({
               placeholder="Enter room number"
               {...form.register("roomNumber")}
               readOnly={isRoomAutoFilled}
-              className={`h-11 border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-lg ${isRoomAutoFilled ? "bg-gray-100" : ""}`}
+              className={`h-12 sm:h-11 border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-lg text-base ${isRoomAutoFilled ? "bg-gray-100" : ""}`}
               data-testid="input-room-number"
             />
             {isRoomAutoFilled && (

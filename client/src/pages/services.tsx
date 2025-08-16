@@ -111,20 +111,20 @@ function ServiceCard({ service, index, onServiceRequest }: { service: typeof ser
       <img 
         src={service.image} 
         alt={service.name} 
-        className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+        className="w-full h-40 sm:h-48 object-cover transition-transform duration-300 hover:scale-105"
       />
-      <div className="p-6 flex flex-col flex-grow">
+      <div className="p-4 sm:p-6 flex flex-col flex-grow">
         <div className="flex items-center mb-3">
-          <IconComponent className="text-primary text-xl mr-3 animate-float" style={{animationDelay: `${index * 0.5}s`}} />
-          <h3 className="text-xl font-semibold">{service.name}</h3>
+          <IconComponent className="text-primary text-lg sm:text-xl mr-2 sm:mr-3 animate-float flex-shrink-0" style={{animationDelay: `${index * 0.5}s`}} />
+          <h3 className="text-lg sm:text-xl font-semibold leading-tight">{service.name}</h3>
         </div>
-        <p className="text-gray-600 mb-4 flex-grow">{service.description}</p>
+        <p className="text-gray-600 mb-4 flex-grow text-sm sm:text-base leading-relaxed">{service.description}</p>
         <Button 
           onClick={() => onServiceRequest(service.name)}
-          className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-5 rounded-lg transition-all duration-300 transform hover:scale-102 shadow-md hover:shadow-lg"
+          className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 sm:px-5 rounded-lg transition-all duration-300 transform hover:scale-102 shadow-md hover:shadow-lg text-sm sm:text-base min-h-[44px]"
           data-testid={`button-request-${service.id}`}
         >
-          🛎️ Request Service
+          <span className="text-sm sm:text-base">🛎️ Request Service</span>
         </Button>
       </div>
     </div>
@@ -152,15 +152,15 @@ export default function Services() {
           backgroundRepeat: 'no-repeat'
         }}></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div ref={headerRef} className={`text-center mb-12 scroll-reveal ${headerVisible ? 'revealed' : ''}`}>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Hotel Services</h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <div ref={headerRef} className={`text-center mb-8 sm:mb-12 scroll-reveal ${headerVisible ? 'revealed' : ''}`}>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 px-2">Hotel Services</h1>
+            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
               Discover our comprehensive range of premium hotel services designed for your comfort and convenience.
             </p>
           </div>
 
           {/* Services Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {services.map((service, index) => (
               <ServiceCard 
                 key={service.id}

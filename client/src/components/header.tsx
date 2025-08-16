@@ -20,27 +20,27 @@ export default function Header() {
         }}></div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex justify-between items-center py-6">
+        <div className="flex justify-between items-center py-4 sm:py-6">
           <Link href="/" className="flex items-center group transition-all duration-300 hover:scale-105">
             <div className="relative">
-              <Hotel className="text-3xl mr-3 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" style={{ filter: 'drop-shadow(0 0 12px rgba(59, 130, 246, 0.5))' }} />
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
+              <Hotel className="text-2xl sm:text-3xl mr-2 sm:mr-3 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" style={{ filter: 'drop-shadow(0 0 12px rgba(59, 130, 246, 0.5))' }} />
+              <div className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-yellow-400 rounded-full animate-pulse"></div>
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-white group-hover:text-blue-300 transition-all duration-300">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white group-hover:text-blue-300 transition-all duration-300">
                 Grand Hotel
               </h1>
-              <p className="text-xs text-gray-300 mt-1 font-medium tracking-wide">LUXURY & COMFORT</p>
+              <p className="text-xs text-gray-300 mt-1 font-medium tracking-wide hidden sm:block">LUXURY & COMFORT</p>
             </div>
           </Link>
           
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden sm:flex space-x-4 sm:space-x-8">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className={`transition-colors duration-200 font-bold ${
+                className={`transition-colors duration-200 font-bold text-sm sm:text-base ${
                   location === item.href
                     ? "text-white hover:text-blue-300"
                     : "text-white hover:text-blue-300"
@@ -60,8 +60,8 @@ export default function Header() {
           {/* Mobile Navigation */}
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden border-2 border-gray-300 bg-white/10 hover:bg-white/20">
-                <Menu className="h-6 w-6 text-white" />
+              <Button variant="ghost" size="icon" className="sm:hidden border-2 border-gray-300 bg-white/10 hover:bg-white/20 min-h-[44px] min-w-[44px]">
+                <Menu className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
