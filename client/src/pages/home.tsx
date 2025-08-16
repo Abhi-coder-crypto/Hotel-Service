@@ -1,7 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Star, Clock, Smartphone } from "lucide-react";
-import hotelLogo from "@assets/image_1755267222169.png";
+import { Star, Clock, Smartphone, Building2 } from "lucide-react";
 
 export default function Home() {
   return (
@@ -20,12 +19,9 @@ export default function Home() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
           <div className="text-center">
             <div className="mb-8 animate-fadeInDown !opacity-100">
-              <img 
-                src={hotelLogo} 
-                alt="Grand Hotel Logo" 
-                className="w-32 h-32 object-contain mx-auto shadow-2xl"
-                style={{ filter: 'brightness(1.1) contrast(1.2)' }}
-              />
+              <div className="w-32 h-32 mx-auto bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center shadow-2xl border-4 border-white/30">
+                <Building2 className="w-16 h-16 text-white" strokeWidth={1.5} />
+              </div>
             </div>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fadeInDown !opacity-100 text-white" style={{ textShadow: '3px 3px 8px rgba(0,0,0,0.9), 1px 1px 3px rgba(0,0,0,1)' }}>
               Welcome to <span className="text-yellow-400 animate-pulse-glow">Grand Hotel</span>
