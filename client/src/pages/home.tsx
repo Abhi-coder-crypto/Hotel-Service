@@ -48,48 +48,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Preview */}
-      <section className="py-16 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-4 animate-fadeInUp">Why Choose Grand Hotel?</h2>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto animate-fadeInUp" style={{animationDelay: '0.2s'}}>
-              We provide exceptional hospitality services designed to make your stay memorable and comfortable.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6 rounded-lg bg-gray-800 hover:bg-gray-700 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 animate-slideInLeft" style={{animationDelay: '0.4s'}}>
-              <img 
-                src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=150" 
-                alt="Premium Quality" 
-                className="w-20 h-16 object-cover rounded-lg mx-auto mb-4 animate-float"
-              />
-              <h3 className="text-xl font-semibold mb-2 text-white">Premium Quality</h3>
-              <p className="text-gray-300">Top-tier services and amenities for the ultimate luxury experience.</p>
-            </div>
-            <div className="text-center p-6 rounded-lg bg-gray-800 hover:bg-gray-700 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 animate-fadeInUp" style={{animationDelay: '0.6s'}}>
-              <img 
-                src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=150" 
-                alt="24/7 Service" 
-                className="w-20 h-16 object-cover rounded-lg mx-auto mb-4 animate-float" 
-                style={{animationDelay: '1s'}}
-              />
-              <h3 className="text-xl font-semibold mb-2 text-white">24/7 Service</h3>
-              <p className="text-gray-300">Round-the-clock availability to meet all your hospitality needs.</p>
-            </div>
-            <div className="text-center p-6 rounded-lg bg-gray-800 hover:bg-gray-700 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 animate-slideInRight" style={{animationDelay: '0.8s'}}>
-              <img 
-                src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=150" 
-                alt="Easy Booking" 
-                className="w-20 h-16 object-cover rounded-lg mx-auto mb-4 animate-float" 
-                style={{animationDelay: '2s'}}
-              />
-              <h3 className="text-xl font-semibold mb-2 text-white">Easy Booking</h3>
-              <p className="text-gray-300">Convenient service requests through our intuitive platform.</p>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
