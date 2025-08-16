@@ -20,9 +20,9 @@ export default function Home() {
           <div className="text-center">
             <div className="mb-8 animate-fadeInDown !opacity-100">
               <img 
-                src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200" 
+                src="@assets/image_1755267222169.png" 
                 alt="Grand Hotel Logo" 
-                className="w-32 h-32 object-cover rounded-full mx-auto border-4 border-yellow-400 shadow-2xl"
+                className="w-32 h-32 object-contain mx-auto shadow-2xl"
                 style={{ filter: 'brightness(1.1) contrast(1.2)' }}
               />
             </div>

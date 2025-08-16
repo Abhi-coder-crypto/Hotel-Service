@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ServiceRequestModal from "../components/service-request-modal";
 import { useScrollAnimation } from "../hooks/use-scroll-animation";
+import Header from "@/components/header";
 import { 
   Utensils, 
   Fan, 
@@ -142,6 +143,7 @@ export default function Services() {
 
   return (
     <div>
+      <Header />
       <section className="py-12 bg-gradient-to-br from-blue-50 via-white to-purple-50 relative">
         <div className="absolute inset-0 opacity-10" style={{
           backgroundImage: "url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&h=1080')",
