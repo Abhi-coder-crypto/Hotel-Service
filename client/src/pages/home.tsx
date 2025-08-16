@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Star, Clock, Smartphone } from "lucide-react";
+import hotelLogo from "@assets/image_1755267222169.png";
 
 export default function Home() {
   return (
@@ -20,7 +21,7 @@ export default function Home() {
           <div className="text-center">
             <div className="mb-8 animate-fadeInDown !opacity-100">
               <img 
-                src="@assets/image_1755267222169.png" 
+                src={hotelLogo} 
                 alt="Grand Hotel Logo" 
                 className="w-32 h-32 object-contain mx-auto shadow-2xl"
                 style={{ filter: 'brightness(1.1) contrast(1.2)' }}
