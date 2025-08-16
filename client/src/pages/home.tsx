@@ -4,9 +4,9 @@ import { Star, Clock, Smartphone, Building2 } from "lucide-react";
 
 export default function Home() {
   return (
-    <div>
+    <div className="w-full overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-gray-900 to-black text-white min-h-screen flex items-center">
+      <section className="relative bg-gradient-to-r from-gray-900 to-black text-white min-h-screen flex items-center w-full">
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/85"></div>
         <div 
           className="absolute inset-0" 
