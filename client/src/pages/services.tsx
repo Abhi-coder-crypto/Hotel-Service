@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import ServiceRequestModal from "../components/service-request-modal";
 import { useScrollAnimation } from "../hooks/use-scroll-animation";
@@ -134,7 +134,31 @@ function ServiceCard({ service, index, onServiceRequest }: { service: typeof ser
 export default function Services() {
   const [selectedService, setSelectedService] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [guestInfo, setGuestInfo] = useState<any>(null);
+  const [roomNumber, setRoomNumber] = useState<string | null>(null);
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.2);
+
+  useEffect(() => {
+    // Get room number from URL (when QR code is scanned)
+    const urlParams = new URLSearchParams(window.location.search);
+    const room = urlParams.get('room');
+    
+    if (room) {
+      setRoomNumber(room);
+      
+      // Fetch guest information from hotel management system
+      fetch(`https://your-hotel-domain.replit.app/api/public/guest/${room}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.name) {
+            setGuestInfo(data);
+          }
+        })
+        .catch(error => {
+          console.log('Could not fetch guest info:', error);
+        });
+    }
+  }, []);
 
   const handleServiceRequest = (serviceName: string) => {
     setSelectedService(serviceName);
@@ -158,6 +182,26 @@ export default function Services() {
               Discover our comprehensive range of premium hotel services designed for your comfort and convenience.
             </p>
           </div>
+
+          {/* Personalized Welcome Section */}
+          {guestInfo && (
+            <div className="bg-gradient-to-r from-emerald-50 to-blue-50 border border-emerald-200 rounded-xl p-6 mb-8 mx-4 sm:mx-0">
+              <div className="text-center">
+                <h2 className="text-2xl font-bold text-emerald-800 mb-2">
+                  🏨 Welcome {guestInfo.name}!
+                </h2>
+                <p className="text-emerald-700 text-lg">
+                  Room {guestInfo.roomNumber} - {guestInfo.roomTypeName}
+                </p>
+                <p className="text-emerald-600 text-sm mt-1">
+                  {guestInfo.hotelName}
+                </p>
+                <p className="text-emerald-600 text-sm mt-2">
+                  ✨ Select any service below to place your request
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* Services Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
