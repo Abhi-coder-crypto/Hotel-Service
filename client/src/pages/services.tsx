@@ -13,7 +13,11 @@ import {
   Dumbbell, 
   Waves, 
   Briefcase, 
-  Wifi 
+  Wifi,
+  Clock,
+  CheckCircle,
+  AlertCircle,
+  XCircle
 } from "lucide-react";
 
 const services = [
@@ -131,12 +135,115 @@ function ServiceCard({ service, index, onServiceRequest }: { service: typeof ser
   );
 }
 
+// Service Request Status Component
+function ServiceRequestStatus({ requests }: { requests: any[] }) {
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'pending':
+        return <Clock className="w-4 h-4 text-yellow-600" />;
+      case 'in-progress':
+        return <AlertCircle className="w-4 h-4 text-blue-600" />;
+      case 'completed':
+        return <CheckCircle className="w-4 h-4 text-green-600" />;
+      case 'cancelled':
+        return <XCircle className="w-4 h-4 text-red-600" />;
+      default:
+        return <Clock className="w-4 h-4 text-gray-600" />;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'pending':
+        return 'bg-yellow-50 border-yellow-200 text-yellow-800';
+      case 'in-progress':
+        return 'bg-blue-50 border-blue-200 text-blue-800';
+      case 'completed':
+        return 'bg-green-50 border-green-200 text-green-800';
+      case 'cancelled':
+        return 'bg-red-50 border-red-200 text-red-800';
+      default:
+        return 'bg-gray-50 border-gray-200 text-gray-800';
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  if (!requests || requests.length === 0) {
+    return (
+      <div className="bg-white rounded-xl p-6 shadow-md border">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">📋 Your Service Requests</h3>
+        <p className="text-gray-600 text-center py-4">No service requests yet. Request a service below to see it here!</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white rounded-xl p-6 shadow-md border" data-testid="service-requests-status">
+      <h3 className="text-lg font-semibold text-gray-800 mb-4">📋 Your Service Requests</h3>
+      <div className="space-y-3">
+        {requests.map((request, index) => (
+          <div 
+            key={request._id || index} 
+            className={`p-4 rounded-lg border-2 ${getStatusColor(request.status)}`}
+            data-testid={`request-${request._id}`}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                {getStatusIcon(request.status)}
+                <span className="font-medium">{request.service}</span>
+              </div>
+              <span className="text-xs font-medium uppercase tracking-wide">
+                {request.status.replace('-', ' ')}
+              </span>
+            </div>
+            {request.notes && (
+              <p className="text-sm opacity-80 mb-2">{request.notes}</p>
+            )}
+            <div className="flex justify-between items-center text-xs opacity-70">
+              <span>Requested: {formatDate(request.requestedAt)}</span>
+              {request.completedAt && (
+                <span>Completed: {formatDate(request.completedAt)}</span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Services() {
   const [selectedService, setSelectedService] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [guestInfo, setGuestInfo] = useState<any>(null);
   const [roomNumber, setRoomNumber] = useState<string | null>(null);
+  const [serviceRequests, setServiceRequests] = useState<any[]>([]);
+  const [loadingRequests, setLoadingRequests] = useState(false);
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.2);
+
+  // Function to fetch service requests for the guest
+  const fetchServiceRequests = async (roomNum: string) => {
+    setLoadingRequests(true);
+    try {
+      const response = await fetch(`/api/guest/${roomNum}/requests`);
+      if (response.ok) {
+        const data = await response.json();
+        setServiceRequests(data.requests || []);
+      }
+    } catch (error) {
+      console.error('Error fetching service requests:', error);
+    } finally {
+      setLoadingRequests(false);
+    }
+  };
 
   useEffect(() => {
     // Get room number and guest name from URL (when QR code is scanned)
@@ -167,8 +274,18 @@ export default function Services() {
             });
           }
         });
+
+      // Fetch service requests for this guest
+      fetchServiceRequests(room);
     }
   }, []);
+
+  // Refresh service requests when modal closes (new request might have been added)
+  useEffect(() => {
+    if (!isModalOpen && roomNumber) {
+      fetchServiceRequests(roomNumber);
+    }
+  }, [isModalOpen, roomNumber]);
 
   const handleServiceRequest = (serviceName: string) => {
     setSelectedService(serviceName);
@@ -210,6 +327,23 @@ export default function Services() {
                   ✨ Select any service below to place your request
                 </p>
               </div>
+            </div>
+          )}
+
+          {/* Service Request Status Section */}
+          {guestInfo && (
+            <div className="mb-8 mx-4 sm:mx-0">
+              {loadingRequests ? (
+                <div className="bg-white rounded-xl p-6 shadow-md border">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">📋 Your Service Requests</h3>
+                  <div className="flex items-center justify-center py-4">
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-emerald-600"></div>
+                    <span className="ml-2 text-gray-600">Loading your requests...</span>
+                  </div>
+                </div>
+              ) : (
+                <ServiceRequestStatus requests={serviceRequests} />
+              )}
             </div>
           )}
 

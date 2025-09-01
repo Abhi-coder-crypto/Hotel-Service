@@ -243,6 +243,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get service requests for a specific customer by room number
+  app.get("/api/guest/:roomNumber/requests", async (req, res) => {
+    try {
+      await connectToMongoDB();
+      const { roomNumber } = req.params;
+      
+      // Find service requests for this room number
+      const serviceRequests = await ServiceRequest.find({
+        roomNumber: roomNumber
+      })
+      .sort({ requestedAt: -1 }) // Most recent first
+      .lean();
+      
+      res.json({
+        requests: serviceRequests,
+        total: serviceRequests.length
+      });
+    } catch (error) {
+      console.error("Error fetching guest service requests:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   // Get service request status for a specific guest/room
   app.get("/api/guest-service-requests/:roomNumber", async (req, res) => {
     try {
