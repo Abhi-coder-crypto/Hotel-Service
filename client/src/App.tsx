@@ -14,7 +14,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/qr-codes" component={QRCodes} />
-      <Route path="/services" component={Services} />
+      <Route path="/services*" component={Services} />
       <Route path="/contact" component={Contact} />
       <Route path="/about" component={About} />
       <Route component={NotFound} />

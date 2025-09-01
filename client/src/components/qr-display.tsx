@@ -77,7 +77,9 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
         // Navigate to services page with guest information  
         const targetUrl = `/services?room=${roomNumber}&name=${encodeURIComponent(guestData.name)}`;
         console.log('Navigating to:', targetUrl);
-        setLocation(targetUrl);
+        
+        // Use window.location instead of setLocation to avoid encoding issues
+        window.location.href = targetUrl;
         
         toast({
           title: "QR Code Scanned Successfully",
@@ -115,7 +117,7 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
               <Button
                 onClick={() => {
                   console.log('Test navigation clicked');
-                  setLocation('/services?room=16&name=avi');
+                  window.location.href = '/services?room=16&name=avi';
                 }}
                 className="bg-purple-600 hover:bg-purple-700 text-white"
                 data-testid="button-test-navigation"
