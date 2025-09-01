@@ -103,9 +103,17 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
             <QrCode className="w-8 h-8 text-blue-600 mr-3" />
             <h2 className="text-3xl font-bold text-gray-800">Quick Access QR Codes</h2>
           </div>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-600 max-w-2xl mx-auto mb-4">
             Scan any QR code below to quickly access our hotel service system from your mobile device.
           </p>
+          <Button
+            onClick={() => refetchStored()}
+            className="bg-green-600 hover:bg-green-700 text-white"
+            data-testid="button-refresh-all-qr"
+          >
+            <RefreshCw className={`w-4 h-4 mr-2 ${loadingStored ? 'animate-spin' : ''}`} />
+            {loadingStored ? 'Refreshing...' : 'Refresh QR Codes'}
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
