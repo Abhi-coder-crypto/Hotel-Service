@@ -139,15 +139,16 @@ export default function Services() {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.2);
 
   useEffect(() => {
-    // Get room number from URL (when QR code is scanned)
+    // Get room number and guest name from URL (when QR code is scanned)
     const urlParams = new URLSearchParams(window.location.search);
     const room = urlParams.get('room');
+    const name = urlParams.get('name');
     
     if (room) {
       setRoomNumber(room);
       
-      // Fetch guest information from hotel management system
-      fetch(`https://your-hotel-domain.replit.app/api/public/guest/${room}`)
+      // Fetch guest information from our backend
+      fetch(`/api/guest/${room}`)
         .then(response => response.json())
         .then(data => {
           if (data.name) {
@@ -156,6 +157,15 @@ export default function Services() {
         })
         .catch(error => {
           console.log('Could not fetch guest info:', error);
+          // If we have name from URL but can't fetch from DB, create basic guest info
+          if (name) {
+            setGuestInfo({
+              name: decodeURIComponent(name),
+              roomNumber: room,
+              roomTypeName: "Standard Room",
+              hotelName: "Grand Hotel"
+            });
+          }
         });
     }
   }, []);

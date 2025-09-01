@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { QrCode, Download, RefreshCw } from "lucide-react";
+import { QrCode, Download, RefreshCw, Scan } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "wouter";
 
 interface QRCodeData {
   name?: string;
@@ -18,6 +19,7 @@ interface QRDisplayProps {
 
 export default function QRDisplay({ hotelId = "default", showStoredQRs = true, showGeneratedQR = true }: QRDisplayProps) {
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
 
   // Fetch stored QR codes from MongoDB
   const { data: storedQRs, isLoading: loadingStored, refetch: refetchStored } = useQuery({
@@ -57,6 +59,37 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
       toast({
         title: "Download Failed",
         description: "Could not download the QR code. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const scanQRCode = async (qrCode: string, guestName: string, roomNumber: string) => {
+    try {
+      // Fetch guest details from the database
+      const response = await fetch(`/api/guest/${roomNumber}`);
+      
+      if (response.ok) {
+        const guestData = await response.json();
+        
+        // Navigate to services page with guest information
+        setLocation(`/services?room=${roomNumber}&name=${encodeURIComponent(guestData.name)}`);
+        
+        toast({
+          title: "QR Code Scanned Successfully",
+          description: `Welcome ${guestData.name}! Taking you to services...`,
+        });
+      } else {
+        toast({
+          title: "Guest Not Found",
+          description: "Could not find guest information for this QR code.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Scanner Error",
+        description: "Could not process the QR code. Please try again.",
         variant: "destructive"
       });
     }
@@ -167,7 +200,16 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
                         className="mx-auto mb-4 rounded-lg shadow-md max-w-full h-auto"
                         data-testid={`img-stored-qr-${index}`}
                       />
-                      <div className="flex gap-2 justify-center">
+                      <div className="flex gap-2 justify-center flex-wrap">
+                        <Button
+                          onClick={() => scanQRCode(qr.qrCode, qr.name || 'Guest', qr.room || '')}
+                          className="bg-blue-600 hover:bg-blue-700 text-white"
+                          size="sm"
+                          data-testid={`button-scan-stored-${index}`}
+                        >
+                          <Scan className="w-4 h-4 mr-1" />
+                          Scan QR
+                        </Button>
                         <Button
                           onClick={() => downloadQR(qr.qrCode, `qr-${qr.name || 'guest'}-room-${qr.room || index}`)}
                           variant="outline"

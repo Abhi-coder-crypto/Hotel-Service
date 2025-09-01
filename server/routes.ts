@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import { insertServiceRequestSchema } from "@shared/schema";
 import { z } from "zod";
 import { sendServiceRequestEmail } from "./email";
-import { getAllQRsForHotel, getQRByRoomAndGuest } from "./mongodb";
+import { getAllQRsForHotel, getQRByRoomAndGuest, Customer, connectToMongoDB } from "./mongodb";
 import QRCode from 'qrcode';
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -112,6 +112,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ qrCode: qrCodeDataUrl, url: websiteUrl });
     } catch (error) {
       console.error("Error generating QR code:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Get guest details by room number
+  app.get("/api/guest/:roomNumber", async (req, res) => {
+    try {
+      await connectToMongoDB();
+      const { roomNumber } = req.params;
+      const customer = await Customer.findOne({ 
+        roomNumber: roomNumber,
+        isActive: true 
+      });
+      
+      if (!customer) {
+        return res.status(404).json({ message: "Guest not found" });
+      }
+      
+      res.json({
+        name: customer.name,
+        roomNumber: customer.roomNumber,
+        roomTypeName: customer.roomTypeName,
+        phone: customer.phone,
+        email: customer.email,
+        hotelName: "Grand Hotel"
+      });
+    } catch (error) {
+      console.error("Error fetching guest details:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });
