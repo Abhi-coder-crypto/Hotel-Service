@@ -92,7 +92,15 @@ export async function getAllQRsForHotel(hotelId: string) {
 export async function getQRByCustomerId(customerId: string) {
   try {
     await connectToMongoDB();
-    const customer = await Customer.findById(customerId);
+    const customer = await Customer.findOne({
+      _id: customerId,
+      isActive: true,
+      $or: [
+        { checkoutTime: { $exists: false } },
+        { checkoutTime: null },
+        { checkoutTime: { $gt: new Date() } }
+      ]
+    });
     return customer?.qrCode || null;
   } catch (error) {
     console.error('Error fetching QR:', error);
