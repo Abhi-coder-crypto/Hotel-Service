@@ -31,7 +31,7 @@ export default function Home() {
             </p>
             <div className="animate-zoomIn !opacity-100 px-4" style={{animationDelay: '0.6s'}}>
               <Link 
-                href="/services"
+                href="/qr-codes"
                 onClick={() => {
                   setTimeout(() => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });

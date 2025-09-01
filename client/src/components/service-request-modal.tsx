@@ -43,15 +43,17 @@ export default function ServiceRequestModal({
   const { toast } = useToast();
   const queryClient = useQueryClient();
   
-  // Extract room number from URL query parameters
+  // Extract room number and guest name from URL query parameters
   const urlParams = new URLSearchParams(window.location.search);
   const roomFromUrl = urlParams.get("room");
+  const nameFromUrl = urlParams.get("name");
   const isRoomAutoFilled = Boolean(roomFromUrl);
+  const isNameAutoFilled = Boolean(nameFromUrl);
 
   const form = useForm<ServiceRequestForm>({
     resolver: zodResolver(serviceRequestSchema),
     defaultValues: {
-      name: "",
+      name: nameFromUrl ? decodeURIComponent(nameFromUrl) : "",
       roomNumber: roomFromUrl || "",
       service: selectedService,
       notes: "",
@@ -63,12 +65,15 @@ export default function ServiceRequestModal({
     form.setValue("service", selectedService);
   }, [selectedService, form]);
 
-  // Update room number when URL changes or modal opens
+  // Update room number and name when URL changes or modal opens
   useEffect(() => {
     if (roomFromUrl) {
       form.setValue("roomNumber", roomFromUrl);
     }
-  }, [roomFromUrl, form, isOpen]);
+    if (nameFromUrl) {
+      form.setValue("name", decodeURIComponent(nameFromUrl));
+    }
+  }, [roomFromUrl, nameFromUrl, form, isOpen]);
 
   const submitServiceRequest = useMutation({
     mutationFn: async (data: ServiceRequestForm) => {
@@ -116,9 +121,16 @@ export default function ServiceRequestModal({
               id="name"
               placeholder="Enter your full name"
               {...form.register("name")}
-              className="h-12 sm:h-11 border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-lg text-base"
+              readOnly={isNameAutoFilled}
+              className={`h-12 sm:h-11 border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-lg text-base ${isNameAutoFilled ? "bg-gray-100" : ""}`}
               data-testid="input-name"
             />
+            {isNameAutoFilled && (
+              <p className="text-xs text-gray-500 mt-1 flex items-center">
+                <Info className="mr-1 h-3 w-3" />
+                Guest name auto-filled from QR code
+              </p>
+            )}
             {form.formState.errors.name && (
               <p className="text-red-500 text-sm mt-1">
                 {form.formState.errors.name.message}
