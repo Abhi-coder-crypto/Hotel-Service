@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 // MongoDB connection
-const mongoUri = 'mongodb+srv://abhijeet18012001:SCeJSjgqac7DmdS5@hotel.d1juzfe.mongodb.net/?retryWrites=true&w=majority&appName=Hotel';
+const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://abhijeet18012001:SCeJSjgqac7DmdS5@hotel.d1juzfe.mongodb.net/?retryWrites=true&w=majority&appName=Hotel';
 
 let isConnected = false;
 
