@@ -37,6 +37,22 @@ const customerSchema = new mongoose.Schema({
 
 export const Customer = mongoose.model('Customer', customerSchema);
 
+// Service Request schema for MongoDB
+const serviceRequestSchema = new mongoose.Schema({
+  guestName: { type: String, required: true },
+  roomNumber: { type: String, required: true },
+  service: { type: String, required: true },
+  notes: String,
+  status: { type: String, default: 'pending', enum: ['pending', 'in-progress', 'completed', 'cancelled'] },
+  hotelId: { type: String, required: true },
+  customerId: String, // Reference to the customer who made the request
+  requestedAt: { type: Date, default: Date.now },
+  completedAt: Date,
+  assignedTo: String, // Staff member assigned to handle the request
+}, { timestamps: true });
+
+export const ServiceRequest = mongoose.model('ServiceRequest', serviceRequestSchema);
+
 // Function to get QR by room and guest name
 export async function getQRByRoomAndGuest(roomNumber: string, guestName: string) {
   try {
