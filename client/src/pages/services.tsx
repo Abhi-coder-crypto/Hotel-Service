@@ -295,14 +295,31 @@ export default function Services() {
   return (
     <div className="w-full overflow-x-hidden">
       <Header />
-      <section className="py-12 bg-gradient-to-br from-blue-50 via-white to-purple-50 relative w-full">
-        <div className="absolute inset-0 opacity-10" style={{
+      <section className="py-12 bg-gradient-to-br from-emerald-50 via-white to-blue-50 relative w-full">
+        {/* Enhanced background with multiple layers */}
+        <div className="absolute inset-0 opacity-5" style={{
           backgroundImage: "url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&h=1080')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
         }}></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Animated service icons background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-16 left-8 text-6xl opacity-10 animate-float">🛎️</div>
+          <div className="absolute top-32 right-12 text-5xl opacity-15 animate-bounce" style={{animationDuration: '3s'}}>🧹</div>
+          <div className="absolute bottom-40 left-16 text-4xl opacity-10 animate-pulse">🍽️</div>
+          <div className="absolute bottom-24 right-20 text-6xl opacity-15 animate-float" style={{animationDelay: '2s'}}>🏊</div>
+          <div className="absolute top-1/2 left-1/4 text-5xl opacity-10 animate-bounce" style={{animationDuration: '4s', animationDelay: '1s'}}>🧴</div>
+          <div className="absolute top-1/3 right-1/3 text-4xl opacity-15 animate-pulse" style={{animationDelay: '3s'}}>🏋️</div>
+        </div>
+        {/* Geometric patterns */}
+        <div className="absolute inset-0 opacity-[0.02]">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpolygon points='50,0 60,40 100,50 60,60 50,100 40,60 0,50 40,40'/%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundSize: '100px 100px'
+          }}></div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           <div ref={headerRef} className={`text-center mb-8 sm:mb-12 scroll-reveal ${headerVisible ? 'revealed' : ''}`}>
             <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 px-2">Hotel Services</h1>
             <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
