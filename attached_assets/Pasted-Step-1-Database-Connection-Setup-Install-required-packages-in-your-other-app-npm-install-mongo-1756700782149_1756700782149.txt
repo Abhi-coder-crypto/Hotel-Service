@@ -1,0 +1,110 @@
+Step 1: Database Connection Setup
+Install required packages in your other app:
+
+npm install mongoose
+Connect to the same MongoDB database:
+
+import mongoose from 'mongoose';
+// Use the same MongoDB connection string as your hotel app
+const mongoUri = 'mongodb+srv://abhijeet18012001:SCeJSjgqac7DmdS5@hotel.d1juzfe.mongodb.net/?retryWrites=true&w=majority&appName=Hotel';
+mongoose.connect(mongoUri)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('MongoDB connection error:', err));
+Step 2: Define Customer Model
+Create the customer model in your other app:
+
+import mongoose from 'mongoose';
+const customerSchema = new mongoose.Schema({
+  id: { type: String, unique: true, required: true },
+  hotelId: { type: String, required: true },
+  name: { type: String, required: true },
+  email: String,
+  phone: { type: String, required: true },
+  roomNumber: { type: String, required: true },
+  roomTypeId: { type: String, required: true },
+  roomTypeName: { type: String, required: true },
+  roomPrice: { type: Number, required: true },
+  checkinTime: { type: Date, default: Date.now },
+  checkoutTime: Date,
+  expectedStayDays: Number,
+  isActive: { type: Boolean, default: true },
+  qrCode: String, // This stores the base64 QR code
+}, { timestamps: true });
+const Customer = mongoose.model('Customer', customerSchema);
+Step 3: Query Functions
+Create functions to fetch QR codes:
+
+// Function to get QR by room and guest name
+async function getQRByRoomAndGuest(roomNumber, guestName) {
+  try {
+    const customer = await Customer.findOne({ 
+      roomNumber: roomNumber, 
+      name: guestName,
+      isActive: true 
+    });
+    return customer?.qrCode || null;
+  } catch (error) {
+    console.error('Error fetching QR:', error);
+    return null;
+  }
+}
+// Function to get all QR codes for a hotel
+async function getAllQRsForHotel(hotelId) {
+  try {
+    const customers = await Customer.find({ 
+      hotelId: hotelId,
+      isActive: true 
+    });
+    return customers.map(customer => ({
+      name: customer.name,
+      room: customer.roomNumber,
+      qrCode: customer.qrCode
+    }));
+  } catch (error) {
+    console.error('Error fetching QRs:', error);
+    return [];
+  }
+}
+// Function to get QR by customer ID
+async function getQRByCustomerId(customerId) {
+  try {
+    const customer = await Customer.findById(customerId);
+    return customer?.qrCode || null;
+  } catch (error) {
+    console.error('Error fetching QR:', error);
+    return null;
+  }
+}
+Step 4: Using the QR Code Data
+Display QR code in your app:
+
+// Example usage
+const qrCodeBase64 = await getQRByRoomAndGuest("16", "avi");
+if (qrCodeBase64) {
+  // Option 1: Display directly in HTML img tag
+  const imgElement = document.createElement('img');
+  imgElement.src = qrCodeBase64;
+  document.body.appendChild(imgElement);
+  
+  // Option 2: In React component
+  return <img src={qrCodeBase64} alt="QR Code" />;
+  
+  // Option 3: Save as file
+  const base64Data = qrCodeBase64.replace(/^data:image\/png;base64,/, '');
+  const buffer = Buffer.from(base64Data, 'base64');
+  // Now you can save buffer to file or process it further
+}
+Parse QR content (if needed):
+
+// If you need to extract the URL from the QR code
+import QrCode from 'qrcode-reader';
+const qr = new QrCode();
+qr.callback = function(err, value) {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log('QR contains URL:', value.result);
+};
+// Convert base64 to image and decode
+// (This requires additional image processing libraries)
