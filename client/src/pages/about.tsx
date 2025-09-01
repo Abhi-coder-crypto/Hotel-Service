@@ -1,18 +1,23 @@
 import { Star, Users, Award, Heart } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export default function About() {
   return (
     <div className="w-full overflow-x-hidden">
       <Header />
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-rose-50 py-12 relative">
-        {/* Luxury hotel background elements */}
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 py-12 relative overflow-hidden">
+        {/* Enhanced gradient layers */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-amber-100/25 via-transparent to-rose-100/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-bl from-yellow-50/30 via-transparent to-pink-50/15"></div>
+        
+        {/* Large luxury background shapes */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-12 w-40 h-40 bg-gradient-to-r from-gold-200 to-amber-200 rounded-full opacity-10 animate-pulse"></div>
-          <div className="absolute top-1/3 right-16 w-32 h-32 bg-gradient-to-r from-rose-200 to-pink-200 rounded-lg opacity-15 animate-bounce" style={{animationDuration: '4s'}}></div>
-          <div className="absolute bottom-32 left-1/4 w-28 h-28 bg-gradient-to-r from-purple-200 to-indigo-200 rounded-full opacity-20 animate-float"></div>
-          <div className="absolute bottom-20 right-1/4 w-36 h-36 bg-gradient-to-r from-emerald-200 to-teal-200 rounded-lg opacity-10 animate-pulse" style={{animationDelay: '2s'}}></div>
+          <div className="absolute -top-24 -left-24 w-80 h-80 bg-gradient-to-r from-amber-200/20 to-yellow-200/20 rounded-full opacity-50 animate-pulse"></div>
+          <div className="absolute top-1/3 -right-32 w-96 h-96 bg-gradient-to-r from-rose-200/15 to-pink-200/15 rounded-full opacity-40 animate-float" style={{animationDuration: '8s'}}></div>
+          <div className="absolute -bottom-32 left-1/4 w-72 h-72 bg-gradient-to-r from-orange-200/20 to-amber-200/20 rounded-full opacity-35 animate-pulse" style={{animationDelay: '2s'}}></div>
+          <div className="absolute bottom-1/4 -right-20 w-64 h-64 bg-gradient-to-r from-emerald-200/25 to-teal-200/25 rounded-full opacity-30 animate-float" style={{animationDelay: '4s'}}></div>
         </div>
         {/* Heritage pattern overlay */}
         <div className="absolute inset-0 opacity-[0.02]">
@@ -113,6 +118,7 @@ export default function About() {
         </div>
       </div>
     </div>
+      <Footer />
     </div>
   );
 }

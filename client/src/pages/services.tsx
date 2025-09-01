@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import ServiceRequestModal from "../components/service-request-modal";
 import { useScrollAnimation } from "../hooks/use-scroll-animation";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { 
   Utensils, 
   Fan, 
@@ -295,14 +296,25 @@ export default function Services() {
   return (
     <div className="w-full overflow-x-hidden">
       <Header />
-      <section className="py-12 bg-gradient-to-br from-emerald-50 via-white to-blue-50 relative w-full">
-        {/* Enhanced background with multiple layers */}
-        <div className="absolute inset-0 opacity-5" style={{
+      <section className="py-12 bg-gradient-to-br from-emerald-50 via-teal-50 to-blue-50 relative w-full overflow-hidden">
+        {/* Multiple gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-green-100/20 via-transparent to-blue-100/30"></div>
+        <div className="absolute inset-0 bg-gradient-to-bl from-emerald-50/40 via-transparent to-cyan-50/20"></div>
+        
+        {/* Luxury hotel background image */}
+        <div className="absolute inset-0 opacity-3" style={{
           backgroundImage: "url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&h=1080')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
         }}></div>
+        
+        {/* Large floating background shapes */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-32 -left-32 w-96 h-96 bg-gradient-to-r from-emerald-200/15 to-teal-200/15 rounded-full opacity-60 animate-pulse"></div>
+          <div className="absolute top-1/4 -right-40 w-[500px] h-[500px] bg-gradient-to-r from-blue-200/10 to-cyan-200/10 rounded-full opacity-50 animate-float" style={{animationDuration: '10s'}}></div>
+          <div className="absolute -bottom-40 left-1/2 w-80 h-80 bg-gradient-to-r from-green-200/20 to-emerald-200/20 rounded-full opacity-40 animate-pulse" style={{animationDelay: '3s'}}></div>
+        </div>
         {/* Animated service icons background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-16 left-8 text-6xl opacity-10 animate-float">🛎️</div>
@@ -383,6 +395,7 @@ export default function Services() {
         onClose={() => setIsModalOpen(false)}
         selectedService={selectedService}
       />
+      <Footer />
     </div>
   );
 }

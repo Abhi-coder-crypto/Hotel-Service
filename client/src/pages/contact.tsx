@@ -1,18 +1,23 @@
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export default function Contact() {
   return (
     <div className="w-full overflow-x-hidden">
       <Header />
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 py-12 relative">
-        {/* Communication themed background */}
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50 py-12 relative overflow-hidden">
+        {/* Enhanced gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/20 via-transparent to-slate-100/25"></div>
+        <div className="absolute inset-0 bg-gradient-to-bl from-gray-50/30 via-transparent to-cyan-50/15"></div>
+        
+        {/* Large communication themed backgrounds */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-16 left-10 w-36 h-36 bg-gradient-to-r from-blue-200 to-cyan-200 rounded-full opacity-15 animate-pulse"></div>
-          <div className="absolute top-1/3 right-12 w-28 h-28 bg-gradient-to-r from-green-200 to-emerald-200 rounded-lg opacity-20 animate-bounce" style={{animationDuration: '3s'}}></div>
-          <div className="absolute bottom-40 left-1/4 w-32 h-32 bg-gradient-to-r from-purple-200 to-violet-200 rounded-full opacity-10 animate-float"></div>
-          <div className="absolute bottom-24 right-1/3 w-24 h-24 bg-gradient-to-r from-orange-200 to-yellow-200 rounded-lg opacity-25 animate-pulse" style={{animationDelay: '1.5s'}}></div>
+          <div className="absolute -top-20 -left-20 w-88 h-88 bg-gradient-to-r from-blue-200/20 to-cyan-200/20 rounded-full opacity-45 animate-pulse"></div>
+          <div className="absolute top-1/4 -right-28 w-[400px] h-[400px] bg-gradient-to-r from-slate-200/15 to-gray-200/15 rounded-full opacity-35 animate-float" style={{animationDuration: '9s'}}></div>
+          <div className="absolute -bottom-28 left-1/3 w-80 h-80 bg-gradient-to-r from-purple-200/20 to-violet-200/20 rounded-full opacity-30 animate-pulse" style={{animationDelay: '2s'}}></div>
+          <div className="absolute bottom-1/3 -right-16 w-64 h-64 bg-gradient-to-r from-green-200/25 to-emerald-200/25 rounded-full opacity-40 animate-float" style={{animationDelay: '3s'}}></div>
         </div>
         {/* Communication pattern */}
         <div className="absolute inset-0 opacity-[0.02]">
@@ -92,6 +97,7 @@ export default function Contact() {
         </div>
       </div>
     </div>
+      <Footer />
     </div>
   );
 }
