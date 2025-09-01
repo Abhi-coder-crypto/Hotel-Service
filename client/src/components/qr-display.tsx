@@ -74,8 +74,10 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
       if (response.ok) {
         const guestData = await response.json();
         
-        // Navigate to services page with guest information
-        setLocation(`/services?room=${roomNumber}&name=${encodeURIComponent(guestData.name)}`);
+        // Navigate to services page with guest information  
+        const targetUrl = `/services?room=${roomNumber}&name=${encodeURIComponent(guestData.name)}`;
+        console.log('Navigating to:', targetUrl);
+        setLocation(targetUrl);
         
         toast({
           title: "QR Code Scanned Successfully",
@@ -109,7 +111,17 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
             Scan any QR code below to quickly access our hotel service system from your mobile device.
           </p>
           {showStoredQRs && (
-            <div className="mb-4">
+            <div className="mb-4 space-x-2">
+              <Button
+                onClick={() => {
+                  console.log('Test navigation clicked');
+                  setLocation('/services?room=16&name=avi');
+                }}
+                className="bg-purple-600 hover:bg-purple-700 text-white"
+                data-testid="button-test-navigation"
+              >
+                🧪 Test Navigation (Room 16)
+              </Button>
               <Button
                 onClick={async (e) => {
                   e.preventDefault();
