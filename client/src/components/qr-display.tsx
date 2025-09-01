@@ -22,9 +22,11 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
   const [, setLocation] = useLocation();
 
   // Fetch stored QR codes from MongoDB
-  const { data: storedQRs, isLoading: loadingStored, refetch: refetchStored } = useQuery({
+  const { data: storedQRs, isLoading: loadingStored, refetch: refetchStored, isFetching: fetchingStored } = useQuery({
     queryKey: ['/api/qr-codes', hotelId],
-    enabled: showStoredQRs
+    enabled: showStoredQRs,
+    staleTime: 0, // Always refetch when refetch is called
+    gcTime: 0 // Don't cache for immediate refresh
   });
 
   // Generate QR code for this website
@@ -109,19 +111,37 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
           {showStoredQRs && (
             <div className="mb-4">
               <Button
-                onClick={(e) => {
+                onClick={async (e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   console.log('Refresh button clicked');
-                  refetchStored();
+                  
+                  toast({
+                    title: "Refreshing QR Codes",
+                    description: "Fetching latest QR codes from database...",
+                  });
+                  
+                  try {
+                    await refetchStored();
+                    toast({
+                      title: "QR Codes Refreshed",
+                      description: "Successfully loaded latest QR codes from database.",
+                    });
+                  } catch (error) {
+                    toast({
+                      title: "Refresh Failed",
+                      description: "Could not refresh QR codes. Please try again.",
+                      variant: "destructive"
+                    });
+                  }
                 }}
-                className="bg-green-600 hover:bg-green-700 text-white cursor-pointer z-10 relative pointer-events-auto"
+                className="bg-green-600 hover:bg-green-700 text-white cursor-pointer z-10 relative pointer-events-auto disabled:opacity-50 disabled:cursor-not-allowed"
                 data-testid="button-refresh-all-qr"
-                disabled={loadingStored}
+                disabled={loadingStored || fetchingStored}
                 type="button"
               >
-                <RefreshCw className={`w-4 h-4 mr-2 ${loadingStored ? 'animate-spin' : ''}`} />
-                {loadingStored ? 'Refreshing...' : 'Refresh QR Codes'}
+                <RefreshCw className={`w-4 h-4 mr-2 ${(loadingStored || fetchingStored) ? 'animate-spin' : ''}`} />
+                {(loadingStored || fetchingStored) ? 'Refreshing...' : 'Refresh QR Codes'}
               </Button>
             </div>
           )}
