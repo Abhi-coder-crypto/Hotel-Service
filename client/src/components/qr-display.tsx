@@ -107,18 +107,23 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
             Scan any QR code below to quickly access our hotel service system from your mobile device.
           </p>
           {showStoredQRs && (
-            <Button
-              onClick={() => {
-                console.log('Refresh button clicked');
-                refetchStored();
-              }}
-              className="bg-green-600 hover:bg-green-700 text-white cursor-pointer"
-              data-testid="button-refresh-all-qr"
-              disabled={loadingStored}
-            >
-              <RefreshCw className={`w-4 h-4 mr-2 ${loadingStored ? 'animate-spin' : ''}`} />
-              {loadingStored ? 'Refreshing...' : 'Refresh QR Codes'}
-            </Button>
+            <div className="mb-4">
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  console.log('Refresh button clicked');
+                  refetchStored();
+                }}
+                className="bg-green-600 hover:bg-green-700 text-white cursor-pointer z-10 relative pointer-events-auto"
+                data-testid="button-refresh-all-qr"
+                disabled={loadingStored}
+                type="button"
+              >
+                <RefreshCw className={`w-4 h-4 mr-2 ${loadingStored ? 'animate-spin' : ''}`} />
+                {loadingStored ? 'Refreshing...' : 'Refresh QR Codes'}
+              </Button>
+            </div>
           )}
         </div>
 
