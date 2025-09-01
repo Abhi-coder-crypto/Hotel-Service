@@ -6,12 +6,14 @@ import Home from "./pages/home";
 import Services from "./pages/services";
 import Contact from "./pages/contact";
 import About from "./pages/about";
+import QRCodes from "./pages/qr-codes";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/qr-codes" component={QRCodes} />
       <Route path="/services" component={Services} />
       <Route path="/contact" component={Contact} />
       <Route path="/about" component={About} />
