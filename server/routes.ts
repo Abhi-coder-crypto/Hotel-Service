@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import { insertServiceRequestSchema } from "@shared/schema";
 import { z } from "zod";
 import { sendServiceRequestEmail } from "./email";
-import { getAllQRsForHotel, getQRByRoomAndGuest, Customer, ServiceRequest, connectToMongoDB } from "./mongodb";
+import { getAllQRsForHotel, getQRByRoomAndGuest, getQRByRoomNumber, createOrUpdateRoomQR, Customer, ServiceRequest, Room, connectToMongoDB } from "./mongodb";
 import QRCode from 'qrcode';
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -178,6 +178,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get all rooms for a hotel
+  app.get("/api/rooms/:hotelId", async (req, res) => {
+    try {
+      await connectToMongoDB();
+      const { hotelId } = req.params;
+      const rooms = await Room.find({ 
+        hotelId: hotelId,
+        isActive: true 
+      }).sort({ roomNumber: 1 });
+      
+      res.json({
+        rooms: rooms.map(room => ({
+          id: room.id,
+          roomNumber: room.roomNumber,
+          roomType: room.roomTypeName,
+          hasQRCode: !!room.qrCode,
+          qrCodeUrl: room.qrCodeUrl,
+          createdAt: room.createdAt,
+          updatedAt: room.updatedAt
+        })),
+        total: rooms.length
+      });
+    } catch (error) {
+      console.error("Error fetching rooms:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Get QR code by room number only (room-specific)
+  app.get("/api/qr-code/room/:roomNumber", async (req, res) => {
+    try {
+      const { roomNumber } = req.params;
+      const { hotelId = '68a0500df0d37587696090c6' } = req.query;
+      const qrCode = await getQRByRoomNumber(roomNumber, hotelId as string);
+      
+      if (!qrCode) {
+        return res.status(404).json({ message: "QR code not found for this room" });
+      }
+      
+      res.json({ qrCode, roomNumber });
+    } catch (error) {
+      console.error("Error fetching QR code:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Legacy endpoint - now redirects to room-based QR
   app.get("/api/qr-code/:roomNumber/:guestName", async (req, res) => {
     try {
       const { roomNumber, guestName } = req.params;
@@ -187,14 +234,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "QR code not found" });
       }
       
-      res.json({ qrCode });
+      res.json({ qrCode, roomNumber, guestName });
     } catch (error) {
       console.error("Error fetching QR code:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });
 
-  // Generate a new QR code for the hotel service website
+  // Generate a new QR code for a specific room
+  app.post("/api/generate-room-qr", async (req, res) => {
+    try {
+      const { roomNumber, hotelId, roomTypeId, roomTypeName, customUrl } = req.body;
+      
+      if (!roomNumber || !hotelId) {
+        return res.status(400).json({ message: "Room number and hotel ID are required" });
+      }
+      
+      // Create URL for this specific room
+      const baseUrl = customUrl || `${req.protocol}://${req.get('host')}`;
+      const roomUrl = `${baseUrl}?room=${roomNumber}&hotel=${hotelId}`;
+      
+      const qrCodeDataUrl = await QRCode.toDataURL(roomUrl, {
+        width: 300,
+        margin: 2,
+        color: {
+          dark: '#000000',
+          light: '#FFFFFF'
+        }
+      });
+      
+      // Save room QR code to database
+      const roomData = {
+        roomNumber,
+        hotelId,
+        roomTypeId: roomTypeId || 'standard',
+        roomTypeName: roomTypeName || 'Standard Room',
+        qrCode: qrCodeDataUrl,
+        qrCodeUrl: roomUrl
+      };
+      
+      const savedRoom = await createOrUpdateRoomQR(roomData);
+      
+      res.json({ 
+        qrCode: qrCodeDataUrl, 
+        url: roomUrl,
+        roomNumber,
+        roomData: savedRoom,
+        message: "Room QR code generated and saved successfully"
+      });
+    } catch (error) {
+      console.error("Error generating room QR code:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Generate a new QR code for the hotel service website (general)
   app.post("/api/generate-qr", async (req, res) => {
     try {
       const { url } = req.body;
