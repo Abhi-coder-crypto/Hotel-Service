@@ -26,6 +26,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Store in MongoDB for admin panel access
       const mongoServiceRequest = new ServiceRequest({
+        id: new Date().getTime().toString() + Math.random().toString(36).substr(2, 9), // Generate unique ID
         guestName: validatedData.name,
         roomNumber: validatedData.roomNumber,
         service: validatedData.service,

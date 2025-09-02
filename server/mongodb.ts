@@ -39,6 +39,7 @@ export const Customer = mongoose.model('Customer', customerSchema);
 
 // Service Request schema for MongoDB
 const serviceRequestSchema = new mongoose.Schema({
+  id: { type: String, unique: true, required: true }, // Add explicit id field
   guestName: { type: String, required: true },
   roomNumber: { type: String, required: true },
   service: { type: String, required: true },
