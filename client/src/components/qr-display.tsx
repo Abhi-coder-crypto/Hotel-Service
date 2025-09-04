@@ -1,12 +1,9 @@
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { QrCode, Download, RefreshCw, Scan, Camera } from "lucide-react";
+import { QrCode, Download, RefreshCw, Scan } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
-import QRScannerComponent from "@/components/qr-scanner";
 
 interface QRCodeData {
   name?: string;
@@ -23,7 +20,6 @@ interface QRDisplayProps {
 export default function QRDisplay({ hotelId = "default", showStoredQRs = true, showGeneratedQR = true }: QRDisplayProps) {
   const { toast } = useToast();
   const [, setLocation] = useLocation();
-  const [showScanner, setShowScanner] = useState(false);
 
   // Fetch stored QR codes from MongoDB
   const { data: storedQRs, isLoading: loadingStored, refetch: refetchStored, isFetching: fetchingStored } = useQuery({
@@ -78,12 +74,12 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
       if (response.ok) {
         const guestData = await response.json();
         
-        // Navigate to services page with guest information
-        setLocation(`/services?room=${roomNumber}&name=${encodeURIComponent(guestData.name)}`);
+        // Navigate to guest profile page instead of services
+        setLocation(`/guest-profile?room=${roomNumber}&name=${encodeURIComponent(guestData.name)}`);
         
         toast({
           title: "QR Code Scanned Successfully",
-          description: `Welcome ${guestData.name}! Taking you to services...`,
+          description: `Welcome ${guestData.name}! Taking you to your profile...`,
         });
       } else {
         toast({
@@ -112,15 +108,6 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
           <p className="text-gray-600 max-w-2xl mx-auto mb-4">
             Scan any QR code below to quickly access our hotel service system from your mobile device.
           </p>
-          <div className="mb-4">
-            <Button
-              onClick={() => setShowScanner(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white mr-4"
-            >
-              <Camera className="w-4 h-4 mr-2" />
-              Scan with Camera
-            </Button>
-          </div>
           {showStoredQRs && (
             <div className="mb-4">
               <Button
@@ -300,22 +287,6 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
           <p>Scan with your phone's camera to quickly access hotel services</p>
         </div>
       </div>
-      
-      {/* QR Scanner Modal */}
-      <Dialog open={showScanner} onOpenChange={setShowScanner}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Scan QR Code</DialogTitle>
-          </DialogHeader>
-          <QRScannerComponent
-            onClose={() => setShowScanner(false)}
-            onScanSuccess={(data) => {
-              console.log('Scan successful:', data);
-              setShowScanner(false);
-            }}
-          />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
