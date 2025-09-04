@@ -8,6 +8,7 @@ import { useLocation } from "wouter";
 interface QRCodeData {
   name?: string;
   room?: string;
+  roomNumber?: string;
   qrCode: string;
 }
 
@@ -68,11 +69,23 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
 
   const scanQRCode = async (qrCode: string, guestName: string, roomNumber: string) => {
     try {
+      console.log('Scanning QR Code:', { qrCode, guestName, roomNumber });
+      
+      if (!roomNumber) {
+        toast({
+          title: "Invalid QR Code",
+          description: "No room number found in QR code data.",
+          variant: "destructive"
+        });
+        return;
+      }
+      
       // Fetch guest details from the database
       const response = await fetch(`/api/guest/${roomNumber}`);
       
       if (response.ok) {
         const guestData = await response.json();
+        console.log('Guest data retrieved:', guestData);
         
         // Navigate to services page with guest information (as it was before)
         setLocation(`/services?room=${roomNumber}&name=${encodeURIComponent(guestData.name)}`);
@@ -82,13 +95,15 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
           description: `Welcome ${guestData.name}! Taking you to services...`,
         });
       } else {
+        console.error('Guest not found for room:', roomNumber);
         toast({
           title: "Guest Not Found",
-          description: "Could not find guest information for this QR code.",
+          description: `Could not find guest information for room ${roomNumber}.`,
           variant: "destructive"
         });
       }
     } catch (error) {
+      console.error('Scanner error:', error);
       toast({
         title: "Scanner Error",
         description: "Could not process the QR code. Please try again.",
@@ -229,7 +244,7 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
                   <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-300" data-testid={`card-stored-qr-${index}`}>
                     <CardHeader className="text-center">
                       <CardTitle className="text-lg font-semibold text-gray-800">
-                        {qr.name ? `${qr.name} - Room ${qr.room}` : `Guest QR Code ${index + 1}`}
+                        {qr.name ? `${qr.name} - Room ${qr.room || qr.roomNumber}` : `Guest QR Code ${index + 1}`}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="text-center">
@@ -241,7 +256,7 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
                       />
                       <div className="flex gap-2 justify-center flex-wrap">
                         <Button
-                          onClick={() => scanQRCode(qr.qrCode, qr.name || 'Guest', qr.room || '')}
+                          onClick={() => scanQRCode(qr.qrCode, qr.name || 'Guest', qr.room || qr.roomNumber || '')}
                           className="bg-blue-600 hover:bg-blue-700 text-white"
                           size="sm"
                           data-testid={`button-scan-stored-${index}`}
@@ -250,7 +265,7 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
                           Scan QR
                         </Button>
                         <Button
-                          onClick={() => downloadQR(qr.qrCode, `qr-${qr.name || 'guest'}-room-${qr.room || index}`)}
+                          onClick={() => downloadQR(qr.qrCode, `qr-${qr.name || 'guest'}-room-${qr.room || qr.roomNumber || index}`)}
                           variant="outline"
                           size="sm"
                           data-testid={`button-download-stored-${index}`}
