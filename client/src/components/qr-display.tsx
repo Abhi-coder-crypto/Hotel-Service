@@ -69,8 +69,6 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
 
   const scanQRCode = async (qrCode: string, guestName: string, roomNumber: string) => {
     try {
-      console.log('Scanning QR Code:', { qrCode, guestName, roomNumber });
-      
       if (!roomNumber) {
         toast({
           title: "Invalid QR Code",
@@ -85,7 +83,6 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
       
       if (response.ok) {
         const guestData = await response.json();
-        console.log('Guest data retrieved:', guestData);
         
         // Navigate to services page with guest information (as it was before)
         setLocation(`/services?room=${roomNumber}&name=${encodeURIComponent(guestData.name)}`);
@@ -95,7 +92,6 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
           description: `Welcome ${guestData.name}! Taking you to services...`,
         });
       } else {
-        console.error('Guest not found for room:', roomNumber);
         toast({
           title: "Guest Not Found",
           description: `Could not find guest information for room ${roomNumber}.`,
@@ -103,7 +99,6 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
         });
       }
     } catch (error) {
-      console.error('Scanner error:', error);
       toast({
         title: "Scanner Error",
         description: "Could not process the QR code. Please try again.",
