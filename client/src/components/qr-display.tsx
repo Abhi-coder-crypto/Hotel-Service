@@ -74,12 +74,12 @@ export default function QRDisplay({ hotelId = "default", showStoredQRs = true, s
       if (response.ok) {
         const guestData = await response.json();
         
-        // Navigate to guest profile page instead of services
-        setLocation(`/guest-profile?room=${roomNumber}&name=${encodeURIComponent(guestData.name)}`);
+        // Navigate to services page with guest information (as it was before)
+        setLocation(`/services?room=${roomNumber}&name=${encodeURIComponent(guestData.name)}`);
         
         toast({
           title: "QR Code Scanned Successfully",
-          description: `Welcome ${guestData.name}! Taking you to your profile...`,
+          description: `Welcome ${guestData.name}! Taking you to services...`,
         });
       } else {
         toast({
