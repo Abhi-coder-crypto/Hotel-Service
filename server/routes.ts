@@ -343,17 +343,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       await connectToMongoDB();
       const { roomNumber } = req.params;
+      const { guestName } = req.query;
       
-      // Find service requests for this room number
+      // Find the current active guest for this room
+      const customer = await Customer.findOne({ 
+        roomNumber: roomNumber,
+        isActive: true 
+      });
+      
+      if (!customer) {
+        return res.status(404).json({ message: "Active guest not found for this room" });
+      }
+      
+      // Find service requests for this specific guest
       const serviceRequests = await ServiceRequest.find({
-        roomNumber: roomNumber
+        roomNumber: roomNumber,
+        guestName: customer.name
       })
       .sort({ requestedAt: -1 }) // Most recent first
       .lean();
       
       res.json({
         requests: serviceRequests,
-        total: serviceRequests.length
+        total: serviceRequests.length,
+        guestName: customer.name
       });
     } catch (error) {
       console.error("Error fetching guest service requests:", error);
